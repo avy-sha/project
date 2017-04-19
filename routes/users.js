@@ -5,7 +5,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var SCOPES = ['profile',
-    'https://www.googleapis.com/auth/gmail.modify'];
+              'email',
+              'https://www.googleapis.com/auth/gmail.modify'];
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
@@ -30,11 +31,9 @@ router.get('/google/callback', function(req,res,next){
                     err: 'Could not log in user'
                 });
             }
-            var token = Verify.getToken(user);
             res.status(200).json({
                 status: 'Login successful!',
-                success: true,
-                token: token
+                success: true
             });
         });
     })(req,res,next);
